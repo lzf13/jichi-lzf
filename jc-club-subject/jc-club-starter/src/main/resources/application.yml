@@ -3,14 +3,14 @@ server:
 spring:
   datasource:
     username: root
-    password: qvQP7MBvSkbyGzLzlRaPp9swmOmkqdVkVgBNPQF7pMlImathGYopQcWR2CuZMZAkL1xrDHwut9Hbr2TZ4qmr2Q==
+    password: jiahui
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://117.72.14.166:3306/jc-club?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false
+    url: jdbc:mysql://117.72.196.209:3306/jc-club?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
       initial-size: 20
       min-idle: 20
-      connectionProperties: config.decrypt=true;config.decrypt.key=${publicKey};
+#      connectionProperties: config.decrypt=true;config.decrypt.key=${publicKey};
       max-active: 100
       max-wait: 60000
       stat-view-servlet:
@@ -31,7 +31,7 @@ spring:
     # Redis数据库索引（默认为0）
     database: 0
     # Redis服务器地址
-    host: 117.72.14.166
+    host: 117.72.196.209
     # Redis服务器连接端口
     port: 6379
     # Redis服务器连接密码（默认为空）
@@ -54,7 +54,7 @@ es:
   cluster:
     esConfigs[0]:
       name: 73438a827b55
-      nodes: 117.72.14.166:9200
+      nodes: 117.72.196.209:9200
 xxl:
   job:
     admin:
@@ -68,6 +68,6 @@ xxl:
       logpath: /data/applogs/xxl-job/jobhandler
       logretentiondays: 30
 rocketmq:
-  name-server: 117.72.10.84:9876
+  name-server: 117.72.196.209:9876
   producer:
     group: test-group

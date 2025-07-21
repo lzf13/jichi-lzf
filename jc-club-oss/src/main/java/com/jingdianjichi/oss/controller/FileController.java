@@ -1,5 +1,6 @@
 package com.jingdianjichi.oss.controller;
 
+import com.alibaba.nacos.api.config.annotation.NacosValue;
 import com.jingdianjichi.oss.entity.Result;
 import com.jingdianjichi.oss.service.FileService;
 import org.springframework.web.bind.annotation.RequestMapping;

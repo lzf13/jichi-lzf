@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
  * @date: 2023/10/14
  */
 @Configuration
-@RefreshScope
+@RefreshScope  //zokeeper动态刷新
 public class StorageConfig {
 
     @Value("${storage.service.type}")
