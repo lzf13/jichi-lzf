@@ -20,13 +20,23 @@ import java.util.Objects;
 @Component
 public class FeignRequestInterceptor implements RequestInterceptor {
 
+    /**
+     * 应用请求模板，将当前请求的loginId头信息传递到新的请求中
+     * @param requestTemplate 请求模板对象，用于构建新的请求
+     */
     @Override
     public void apply(RequestTemplate requestTemplate) {
+        // 获取当前请求的属性对象
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        // 从请求属性中获取HttpServletRequest对象
         HttpServletRequest request = requestAttributes.getRequest();
+        // 检查请求对象是否为空
         if (Objects.nonNull(request)) {
+            // 从请求头中获取loginId信息
             String loginId = request.getHeader("loginId");
+            // 检查loginId是否为空或空白字符串
             if (StringUtils.isNotBlank(loginId)) {
+                // 将loginId添加到新的请求头中
                 requestTemplate.header("loginId", loginId);
             }
         }

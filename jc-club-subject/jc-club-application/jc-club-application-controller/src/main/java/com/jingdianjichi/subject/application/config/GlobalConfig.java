@@ -27,9 +27,16 @@ public class GlobalConfig extends WebMvcConfigurationSupport {
         converters.add(mappingJackson2HttpMessageConverter());
     }
 
+    /**
+     * 添加拦截器方法
+     * 重写WebMvcConfigurer中的addInterceptors方法，用于注册自定义拦截器
+     * @param registry 拦截器注册器，用于注册拦截器
+     */
     @Override
     protected void addInterceptors(InterceptorRegistry registry) {
+        // 创建登录拦截器实例并添加到注册器中
         registry.addInterceptor(new LoginInterceptor())
+                // 设置拦截器拦截所有路径（/**表示拦截所有请求路径）
                 .addPathPatterns("/**");
     }
 

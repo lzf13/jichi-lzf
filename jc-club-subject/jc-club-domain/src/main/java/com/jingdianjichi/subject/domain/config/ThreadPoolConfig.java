@@ -17,6 +17,19 @@ import java.util.concurrent.TimeUnit;
 @Configuration
 public class ThreadPoolConfig {
 
+    /**
+     * 创建并配置标签处理线程池
+     *
+     * @return 配置好的ThreadPoolExecutor实例，用于处理标签相关任务
+     *
+     * 线程池配置说明：
+     * - 核心线程数：20
+     * - 最大线程数：100
+     * - 空闲线程存活时间：5秒
+     * - 工作队列：容量为40的LinkedBlockingDeque
+     * - 线程工厂：使用自定义名称的线程工厂，线程名前缀为"label"
+     * - 拒绝策略：调用者运行策略，当线程池无法处理任务时由调用线程执行
+     */
     @Bean(name = "labelThreadPool")
     public ThreadPoolExecutor getLabelThreadPool() {
         return new ThreadPoolExecutor(20, 100, 5,

@@ -117,26 +117,38 @@ public class SubjectCategoryDomainServiceImpl implements SubjectCategoryDomainSe
             log.info("SubjectCategoryController.queryCategoryAndLabel.subjectCategoryList:{}",
                     JSON.toJSONString(subjectCategoryList));
         }
+        // 将subjectCategoryList转换为SubjectCategoryBO列表
         List<SubjectCategoryBO> categoryBOList = SubjectCategoryConverter.INSTANCE.convertBoToCategory(subjectCategoryList);
+        // 创建一个HashMap，用于存储分类ID与对应的标签列表的映射关系
         Map<Long, List<SubjectLabelBO>> map = new HashMap<>();
+        // 使用CompletableFuture实现并行处理，为每个分类获取标签列表
         List<CompletableFuture<Map<Long, List<SubjectLabelBO>>>> completableFutureList = categoryBOList.stream().map(category ->
+                // 使用supplyAsync异步执行getLabelBOList方法，并指定线程池为labelThreadPool
                 CompletableFuture.supplyAsync(() -> getLabelBOList(category), labelThreadPool)
         ).collect(Collectors.toList());
+        // 遍历所有异步任务的结果，并将结果合并到map中
         completableFutureList.forEach(future -> {
             try {
+                // 获取异步任务的结果
                 Map<Long, List<SubjectLabelBO>> resultMap = future.get();
+                // 如果结果不为空，则将结果合并到map中
                 if (!MapUtils.isEmpty(resultMap)) {
                     map.putAll(resultMap);
                 }
             } catch (Exception e) {
+                // 异常处理，打印堆栈信息
                 e.printStackTrace();
             }
         });
+        // 为每个分类设置对应的标签列表
         categoryBOList.forEach(categoryBO -> {
+            // 检查该分类是否有对应的标签列表
             if (!CollectionUtils.isEmpty(map.get(categoryBO.getId()))) {
+                // 设置标签列表
                 categoryBO.setLabelBOList(map.get(categoryBO.getId()));
             }
         });
+        // 返回处理后的分类列表
         return categoryBOList;
     }
 

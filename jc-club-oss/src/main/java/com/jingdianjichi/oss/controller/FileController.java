@@ -4,6 +4,7 @@ import com.alibaba.nacos.api.config.annotation.NacosValue;
 import com.jingdianjichi.oss.entity.Result;
 import com.jingdianjichi.oss.service.FileService;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -37,7 +38,9 @@ public class FileController {
      * 上传文件
      */
     @RequestMapping("/upload")
-    public Result upload(MultipartFile uploadFile, String bucket, String objectName) throws Exception {
+    public Result upload(@RequestParam("file") MultipartFile uploadFile,  // 添加@RequestParam
+                         @RequestParam(value = "bucket", required = false) String bucket,
+                         @RequestParam(value = "objectName", required = false) String objectName) throws Exception {
         String url = fileService.uploadFile(uploadFile, bucket, objectName);
         return Result.ok(url);
     }
